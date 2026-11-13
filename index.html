@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Private DNS — ad-free internet on PC, Android and iPhone</title>
+<meta name="description" content="Private DNS blocks ads and trackers on your Windows PC, Android phone and iPhone. Download the app or install the profile, then switch it on.">
+<meta name="theme-color" content="#f5f5f7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230071e3'/%3E%3Cpath d='M12 5l6 2.4v4.2c0 3.6-2.5 6.6-6 7.4-3.5-.8-6-3.8-6-7.4V7.4L12 5z' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --secondary: #6e6e73;
+    --tertiary: #8e8e93;
+    --green: #34c759;
+    --green-text: #1e8e3e;
+    --line: #f0f0f3;
+    --chip-bg: #f0f0f2;
+    --chip-text: #48484a;
+    --dot-off: #a1a1a6;
+    --blue: #0071e3;
+    --blue-dark: #0062c4;
+    --brand: #3a3a3c;
+    --red: #ff3b30;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 1px 3px rgba(0, 0, 0, .04);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 14px 18px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .brandbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+    padding-left: 2px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand svg { width: 20px; height: 20px; border-radius: 5px; }
+  .brand span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand);
+  }
+  .card {
+    background: var(--card);
+    box-shadow: var(--shadow);
+    border-radius: 22px;
+  }
+  .hero {
+    border-radius: 26px;
+    padding: 22px;
+  }
+  .eyebrow {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--tertiary);
+  }
+  h1 {
+    margin: 10px 0 0;
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: -.015em;
+    line-height: 1.15;
+  }
+  .sub {
+    margin: 8px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--secondary);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 14px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    font-size: 11.5px;
+    line-height: 1.2;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dot-off);
+  }
+  .dot.on { background: var(--green); }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: filter .15s ease;
+  }
+  .btn:active { filter: brightness(.94); }
+  .btn.primary {
+    background: var(--blue);
+    color: #fff;
+  }
+  .btn.secondary {
+    background: var(--chip-bg);
+    color: var(--text);
+  }
+  .btn svg { width: 16px; height: 16px; }
+  .hint {
+    margin: 9px 0 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--tertiary);
+  }
+  .yt {
+    display: flex;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 24px;
+    background: #1d1d1f;
+    color: #f5f5f7;
+    align-items: flex-start;
+  }
+  .yt-icon {
+    flex: none;
+    width: 42px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .yt-icon svg { width: 12px; height: 12px; }
+  .yt h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .yt p {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #b8b8bd;
+  }
+  .yt b { color: #fff; font-weight: 500; }
+  .section-title {
+    margin: 12px 2px 0;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -.015em;
+  }
+  .section-sub {
+    margin: 4px 2px 0;
+    font-size: 12.5px;
+    color: var(--secondary);
+    line-height: 1.45;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .feature { padding: 18px 20px; }
+  .feature h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -.01em;
+  }
+  .feature p {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--secondary);
+  }
+  .feature .glyph {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--chip-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: var(--secondary);
+  }
+  .feature .glyph svg { width: 14px; height: 14px; }
+  .dl { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .dl-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dl-icon {
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--chip-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+  }
+  .dl-icon svg { width: 20px; height: 20px; }
+  .dl-head h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -.01em;
+  }
+  .dl-head p {
+    margin: 2px 0 0;
+    font-size: 11.5px;
+    color: var(--tertiary);
+  }
+  .dl .btn { height: 42px; font-size: 14px; }
+  .dl-note {
+    margin: 0;
+    font-size: 11px;
+    color: var(--tertiary);
+    text-align: center;
+  }
+  .steps { padding: 18px 20px; }
+  .steps h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -.01em;
+  }
+  ol {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+  li {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--secondary);
+    padding: 4px 0;
+  }
+  li b { color: var(--text); font-weight: 500; }
+  .facts { padding: 4px 18px; }
+  .fact {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 13px 0;
+    font-size: 12.5px;
+    color: var(--secondary);
+  }
+  .value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: right;
+  }
+  .divider { height: 1px; background: var(--line); }
+  .note { padding: 18px 20px; }
+  .note h2 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -.01em;
+  }
+  .note p {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--secondary);
+  }
+  .note p + p { margin-top: 8px; }
+  .note b { color: var(--text); font-weight: 500; }
+  .footer {
+    margin-top: 8px;
+    padding: 18px 2px 0;
+    border-top: 1px solid rgba(0, 0, 0, .07);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--brand);
+  }
+  .footer-brand svg { width: 16px; height: 16px; border-radius: 4px; }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--secondary);
+    text-decoration: none;
+    transition: color .15s ease;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: 11px;
+    color: var(--tertiary);
+  }
+  @media (min-width: 760px) {
+    .page { max-width: 900px; padding: 22px 28px 52px; gap: 14px; }
+    h1 { font-size: 34px; }
+    .sub { font-size: 14px; max-width: 560px; }
+    .hero { padding: 30px; }
+    .actions { flex-direction: row; }
+    .btn { padding: 0 18px; }
+    .features { grid-template-columns: 1fr 1fr; }
+    .downloads { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .downloads .dl { height: 100%; }
+    .steps-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .steps-grid .steps { height: 100%; }
+    .yt { padding: 26px 30px; align-items: center; }
+    .yt h2 { font-size: 19px; }
+    .yt p { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="brandbar">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#0071e3"></rect>
+          <path d="M12 5l6 2.4v4.2c0 3.6-2.5 6.6-6 7.4-3.5-.8-6-3.8-6-7.4V7.4L12 5z" fill="#fff"></path>
+        </svg>
+        <span>Private DNS</span>
+      </div>
+    </div>
+
+    <section class="card hero">
+      <span class="eyebrow">WINDOWS · ANDROID · IPHONE</span>
+      <h1>Ad-free internet, on every device.</h1>
+      <p class="sub">Private DNS blocks ads and trackers before they load, and encrypts every DNS lookup. One switch on your PC and Android phone, one profile on your iPhone.</p>
+      <div class="chips">
+        <span class="chip"><span class="dot on"></span>Encrypted</span>
+        <span class="chip"><span class="dot on"></span>System-wide</span>
+        <span class="chip"><span class="dot"></span>No account</span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="#download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 21h16"></path></svg>
+          Download
+        </a>
+        <a class="btn secondary" href="#what">What it does</a>
+      </div>
+    </section>
+
+    <section class="card yt">
+      <div class="yt-icon" aria-hidden="true">
+        <svg viewBox="0 0 12 12" fill="#fff"><path d="M2 1l9 5-9 5z"></path></svg>
+      </div>
+      <div>
+        <h2>YouTube, without the ads.</h2>
+        <p><b>Every ad and tracker domain YouTube uses is blocked before it loads.</b> Videos start straight away, with no pre-roll, no mid-roll and no banners — on your PC, your Android phone and your iPhone.</p>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="what">What it does</h2>
+    <p class="section-sub">It sits between your device and the internet, and filters the requests ads rely on.</p>
+    <div class="features">
+      <section class="card feature">
+        <div class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M5.5 5.5l13 13"></path></svg>
+        </div>
+        <h3>Blocks ads and trackers</h3>
+        <p>Ad networks, analytics and tracking domains are refused, so pages load cleaner and load faster.</p>
+      </section>
+      <section class="card feature">
+        <div class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        </div>
+        <h3>Encrypts every lookup</h3>
+        <p>DNS is sent over HTTPS, so your internet provider and public Wi-Fi can’t see the sites you open.</p>
+      </section>
+      <section class="card feature">
+        <div class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M5 8h14"></path><path d="M7 16l-3-3"></path><path d="M17 16l3-3"></path></svg>
+        </div>
+        <h3>One switch</h3>
+        <p>Turn it on when you want it, off when you don’t. There is nothing to configure and no account to create.</p>
+      </section>
+      <section class="card feature">
+        <div class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h10"></path></svg>
+        </div>
+        <h3>Works everywhere</h3>
+        <p>Wi-Fi and mobile data, in every app and browser. The iPhone profile needs no app at all.</p>
+      </section>
+    </div>
+
+    <h2 class="section-title" id="download">Download</h2>
+    <p class="section-sub">Pick your device. The files are hosted here, straight from the developer.</p>
+    <div class="downloads">
+      <section class="card dl">
+        <div class="dl-top">
+          <div class="dl-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 4h8v8H3zM13 4h8v8h-8zM3 14h8v8H3zM13 14h8v8h-8z"></path></svg>
+          </div>
+          <div class="dl-head">
+            <h3>Windows PC</h3>
+            <p>Windows 10 and 11 · 97 MB</p>
+          </div>
+        </div>
+        <a class="btn primary" href="downloads/Private-DNS-Windows-Setup.exe" download="Private DNS Setup.exe">Download for Windows</a>
+        <p class="dl-note">Run the setup, then switch on Private DNS.</p>
+      </section>
+
+      <section class="card dl">
+        <div class="dl-top">
+          <div class="dl-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 10.5a6 6 0 0 1 12 0v6.2a1.3 1.3 0 0 1-1.3 1.3H7.3A1.3 1.3 0 0 1 6 16.7z"></path><path d="M8.4 3.2l1 1.8M15.6 3.2l-1 1.8"></path><circle cx="9.4" cy="10" r=".9" fill="#fff"></circle><circle cx="14.6" cy="10" r=".9" fill="#fff"></circle><path d="M3.6 12.4h1.6v4.2H3.6zM18.8 12.4h1.6v4.2h-1.6z"></path></svg>
+          </div>
+          <div class="dl-head">
+            <h3>Android</h3>
+            <p>Android 7.0 and later · 69 KB</p>
+          </div>
+        </div>
+        <a class="btn primary" href="downloads/Private-DNS-Android.apk" download="Private DNS.apk">Download for Android</a>
+        <p class="dl-note">Open the file and allow install from this source.</p>
+      </section>
+
+      <section class="card dl">
+        <div class="dl-top">
+          <div class="dl-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="2.5" width="10" height="19" rx="2.4"></rect><path d="M10.5 5h3"></path><path d="M11 18.5h2"></path></svg>
+          </div>
+          <div class="dl-head">
+            <h3>iPhone</h3>
+            <p>iOS 14 and later · Profile</p>
+          </div>
+        </div>
+        <a class="btn primary" href="downloads/Private-DNS-iPhone.mobileconfig" download="Private DNS.mobileconfig">Install on iPhone</a>
+        <p class="dl-note">Open in Safari, then install in Settings.</p>
+      </section>
+    </div>
+
+    <h2 class="section-title">Install</h2>
+    <div class="steps-grid">
+      <section class="card steps">
+        <h3>Windows</h3>
+        <ol>
+          <li>Run <b>Private DNS Setup</b> and allow the permission prompt.</li>
+          <li>Open the app and flip the switch on.</li>
+          <li>Ads are blocked on every network.</li>
+        </ol>
+      </section>
+      <section class="card steps">
+        <h3>Android</h3>
+        <ol>
+          <li>Open the <b>APK</b> and allow installing from this source.</li>
+          <li>Open <b>Private DNS</b> and flip the switch on.</li>
+          <li>Allow the VPN request Android shows.</li>
+        </ol>
+      </section>
+      <section class="card steps">
+        <h3>iPhone</h3>
+        <ol>
+          <li>Tap <b>Install on iPhone</b> and allow the download in Safari.</li>
+          <li>Open <b>Settings</b> → <b>Profile Downloaded</b> and install it.</li>
+          <li>Select <b>Private DNS</b> under VPN &amp; DNS.</li>
+        </ol>
+      </section>
+    </div>
+
+    <section class="card facts">
+      <div class="fact"><span>Protocol</span><span class="value">DNS over HTTPS</span></div>
+      <div class="divider"></div>
+      <div class="fact"><span>Servers</span><span class="value">Private</span></div>
+      <div class="divider"></div>
+      <div class="fact"><span>Applies to</span><span class="value">Wi-Fi and mobile data</span></div>
+      <div class="divider"></div>
+      <div class="fact"><span>Cost</span><span class="value">Free</span></div>
+    </section>
+
+    <section class="card note">
+      <h2>Good to know</h2>
+      <p>Everything is unsigned, so Windows SmartScreen and Android may ask you to confirm before installing, and iOS labels the profile <b>Not Verified</b>. This is expected.</p>
+      <p>Turning the switch off, or removing the profile in Settings, restores your previous DNS settings.</p>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect width="24" height="24" rx="6" fill="#0071e3"></rect>
+            <path d="M12 5l6 2.4v4.2c0 3.6-2.5 6.6-6 7.4-3.5-.8-6-3.8-6-7.4V7.4L12 5z" fill="#fff"></path>
+          </svg>
+          Private DNS
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#what">What it does</a>
+          <a href="#download">Download</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>Windows · Android · iPhone</span>
+        <span>© 2026 Private DNS</span>
+      </div>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      function scrollToHash(hash, smooth) {
+        var el = hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
+        if (!el) return false;
+        el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+        return true;
+      }
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href]');
+        if (!a) return;
+        var url = new URL(a.getAttribute('href'), location.href);
+        if (url.origin !== location.origin || url.pathname !== location.pathname || !url.hash) return;
+        if (scrollToHash(url.hash, true)) {
+          e.preventDefault();
+          history.pushState(null, '', url.hash);
+        }
+      });
+      window.addEventListener('load', function () { scrollToHash(location.hash, false); });
+    })();
+  </script>
+</body>
+</html>

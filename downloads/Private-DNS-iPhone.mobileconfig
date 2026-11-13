@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadDisplayName</key><string>Private DNS</string>
+  <key>PayloadDescription</key><string>Encrypted DNS for all apps and networks</string>
+  <key>PayloadIdentifier</key><string>com.privatedns.profile</string>
+  <key>PayloadOrganization</key><string>Private DNS</string>
+  <key>PayloadType</key><string>Configuration</string>
+  <key>PayloadUUID</key><string>70334B62-F1D0-49E9-A49A-07B183AA7716</string>
+  <key>PayloadVersion</key><integer>1</integer>
+  <key>PayloadScope</key><string>System</string>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDisplayName</key><string>Private DNS</string>
+      <key>PayloadIdentifier</key><string>com.privatedns.profile.dns</string>
+      <key>PayloadOrganization</key><string>Private DNS</string>
+      <key>PayloadType</key><string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key><string>FD57BB69-1B92-40DA-80B2-649ECDCB4601</string>
+      <key>PayloadVersion</key><integer>1</integer>
+      <key>DNSSettings</key>
+      <dict>
+        <key>DNSProtocol</key><string>HTTPS</string>
+        <key>ServerURL</key><string>https://dns.controld.com/zc2p98qz3k</string>
+        <key>ServerAddresses</key>
+        <array>
+          <string>76.76.2.22</string>
+          <string>2606:1a40::22</string>
+        </array>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>
